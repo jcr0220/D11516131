@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f3f6f1">
+  <title>待辦清單</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="app-header">
+      <p class="eyebrow">每日整理</p>
+      <h1>待辦清單</h1>
+      <p class="subtitle">把想做的事，一件一件完成。</p>
+    </header>
+
+    <!-- 用表單讓輸入框支援 Enter 新增 -->
+    <form id="todo-form" class="todo-form" autocomplete="off">
+      <label class="sr-only" for="todo-input">待辦事項內容</label>
+      <input
+        id="todo-input"
+        class="todo-input"
+        type="text"
+        placeholder="例如：整理書桌"
+        maxlength="200"
+        required
+      >
+      <button class="btn-add" type="submit">新增</button>
+    </form>
+
+    <section class="list-section" aria-label="待辦事項">
+      <ul id="todo-list" class="todo-list" aria-live="polite"></ul>
+      <p id="empty-state" class="empty-state" hidden>還沒有任何待辦事項,新增一個吧!</p>
+    </section>
+
+    <footer class="app-footer">
+      <span id="remaining-count" aria-live="polite">未完成:0 項</span>
+      <span class="footer-mark" aria-hidden="true">今日・待辦</span>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
