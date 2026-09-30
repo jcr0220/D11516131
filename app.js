@@ -10,6 +10,7 @@ const input = document.getElementById('todo-input');
 const list = document.getElementById('todo-list');
 const emptyState = document.getElementById('empty-state');
 const remainingCount = document.getElementById('remaining-count');
+const clearCompletedButton = document.getElementById('clear-completed');
 const filterButtons = document.querySelectorAll('.btn-filter');
 const themeToggle = document.getElementById('theme-toggle');
 const themeIcon = document.getElementById('theme-icon');
@@ -136,6 +137,7 @@ function render() {
   // 更新未完成數量(不受篩選影響,永遠是整體數量)
   const remaining = todos.filter((todo) => !todo.completed).length;
   remainingCount.textContent = `未完成:${remaining} 項`;
+  clearCompletedButton.disabled = !todos.some((todo) => todo.completed);
 }
 
 // ---------- 操作行為 ----------
@@ -172,6 +174,19 @@ function deleteTodo(id) {
   render();
 }
 
+/** 確認後清除所有已完成待辦 */
+function clearCompletedTodos() {
+  const completedCount = todos.filter((todo) => todo.completed).length;
+  if (completedCount === 0) return;
+
+  const confirmed = window.confirm(`確定要清除 ${completedCount} 項已完成的待辦事項嗎?`);
+  if (!confirmed) return;
+
+  todos = todos.filter((todo) => !todo.completed);
+  saveTodos();
+  render();
+}
+
 /** 切換篩選條件 */
 function setFilter(filter) {
   currentFilter = filter;
@@ -198,6 +213,8 @@ form.addEventListener('submit', (event) => {
   input.value = '';
   input.focus();
 });
+
+clearCompletedButton.addEventListener('click', clearCompletedTodos);
 
 // 用事件委派處理清單內的點擊(勾選完成 / 刪除)
 list.addEventListener('click', (event) => {
